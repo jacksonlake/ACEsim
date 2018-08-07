@@ -17,9 +17,9 @@ def download_crop_wav(name,START_TIME,STOP_TIME,link):
 #Converts downloaded m4a file into wav file
 #Crops wav file according to START_TIME and STOP_TIME
 #Adds to the name of the file _AI
+#Takes only str objects!
 #--------------------------------------------------
     command = 'youtube-dl -f 140 ' + link
-    print(command)
     print('---------------------------\n')
     print('Invoking youtube-dl...\n') 
     print('---------------------------')
@@ -28,9 +28,9 @@ def download_crop_wav(name,START_TIME,STOP_TIME,link):
     print('---------------------------\n')
     print('Renaming downloaded file according with the DataBase...\n')
     print('---------------------------')
-    command = 'mv *m4a ' + name
+    command = 'mv *m4a ' + name + '.m4a'
     os.system(command)
-    command = 'avconv -i ' + name + ' ' + name + '.wav' #Converting to wav 
+    command = 'avconv -i ' + name + '.m4a ' + name + '.wav' #Converting to wav 
     os.system(command)
     print('---------------------------\n')
     print('Cropping...\n')
@@ -41,6 +41,7 @@ def download_crop_wav(name,START_TIME,STOP_TIME,link):
     print('AI-ready file created...\n')
     print('---------------------------')
     os.system('ls')
+    os.system('rm -rf *m4a') #Clean-up: all M4A files should be removed
 
 def main(argv):
     inputfile=''
@@ -62,11 +63,12 @@ def main(argv):
     #-----names
     START_TIME = str(50)
     STOP_TIME = str(70)
-    link = 'https://www.youtube.com/watch?v=eVTXPUF4Oz4'
-    name = 'maddyson'
+    link = 'https://www.youtube.com/watch?v=MkgR0SxmMKo'
+    name = 'single'
     #-----names
-    download_crop_wav(name,START_TIME,STOP_TIME,link)
-    os.system('rm -rf *m4a') #Clean-up: all M4A files should be removed
+    download_crop_wav('double','70','90','https://www.youtube.com/watch?v=VDHFK5b2uWw')
+    #download_crop_wav(name,START_TIME,STOP_TIME,link)
+    
 
 if __name__ == "__main__":
    main(sys.argv[1:])
