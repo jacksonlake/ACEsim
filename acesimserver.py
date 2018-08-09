@@ -60,9 +60,10 @@ def download_crop_wav(name,START_TIME,STOP_TIME,link):
     #cropping to START_TIME <-> STOP_TIME
     os.system('ffmpeg -i '+ name + '.wav -ss ' + START_TIME + ' -to ' + STOP_TIME + ' ' + name + '_.wav')
     print('---------------------------\n')
-    print('AI-ready file created...\n')
+    print('AI-ready file created...\nRemoving temp files...\n')
     print('---------------------------')
-    os.system('rm -rf *m4a') #Clean-up: all M4A files should be removed
+    os.system('rm -rf *m4a') #Clean-up, we don't have a lot of dosk space there
+    os.system('rm -rf ' + name + '.wav')
     os.system('ls')
 
 def main(argv):
