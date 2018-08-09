@@ -43,24 +43,22 @@ def download_crop_wav(name,START_TIME,STOP_TIME,link):
 #Adds to the name of the file _AI
 #Takes only str objects!
 #--------------------------------------------------
-    command = 'youtube-dl -f 140 ' + link
     print('---------------------------\n')
+    print('Processing file: ',name,'.wav')
     print('Invoking youtube-dl...\n') 
     print('---------------------------')
-    os.system(command)
+    os.system('youtube-dl -f 140 ' + link)
     os.system('ls')    
     print('---------------------------\n')
     print('Renaming downloaded file according with the DataBase...\n')
-    print('---------------------------')
-    command = 'mv *m4a ' + name + '.m4a'
-    os.system(command)
-    command = 'avconv -i ' + name + '.m4a ' + name + '.wav' #Converting to wav 
-    os.system(command)
+    print('---------------------------') 
+    os.system('mv *m4a ' + name + '.m4a')
+    os.system('avconv -i ' + name + '.m4a ' + name + '.wav')
     print('---------------------------\n')
     print('Cropping...\n')
     print('---------------------------')
-    command = 'ffmpeg -i '+ name + '.wav -ss ' + START_TIME + ' -to ' + STOP_TIME + ' ' + name + '_.wav' #cropping to START_TIME <-> STOP_TIME
-    os.system(command)
+    #cropping to START_TIME <-> STOP_TIME
+    os.system('ffmpeg -i '+ name + '.wav -ss ' + START_TIME + ' -to ' + STOP_TIME + ' ' + name + '_.wav')
     print('---------------------------\n')
     print('AI-ready file created...\n')
     print('---------------------------')
@@ -82,23 +80,13 @@ def main(argv):
         elif opt in ("-i", "--ifile"):
             inputfile = arg
     outputfile = '_' + inputfile
-    csvfile = 'balanced_train_segments.csv'
+    csvfile = inputfile
     check_existence(inputfile)
     check_existence(csvfile)
 
-    youtube_id_list,star_time_list,stop_time_list = read_csv_audioset('balanced_train_segments.csv')
+    youtube_id_list,star_time_list,stop_time_list = read_csv_audioset(inputfile)
     for i in range(len(youtube_id_list)):
         download_crop_wav(str(i),star_time_list[i],stop_time_list[i],'https://www.youtube.com/watch?v=' + youtube_id_list[i])
-
-    #-----names
-    #START_TIME = str(50)
-    #STOP_TIME = str(70)
-    #link = 'https://www.youtube.com/watch?v=MkgR0SxmMKo'
-    #name = 'single'
-    #-----names
-    #download_crop_wav('double','70','90','https://www.youtube.com/watch?v=c9cZSLfh7Xw')
-    #download_crop_wav(name,START_TIME,STOP_TIME,link)
-    
 
 if __name__ == "__main__":
    main(sys.argv[1:])
