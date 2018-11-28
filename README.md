@@ -2,7 +2,7 @@
 
 Processes Google AudioSet and converts it to the DataBase for the ACE system. 
 
-#acesimserver.py
+# acesimserver.py
 
 Works under linux. Reads Google AudioSet csv file in series, for each video does the following:
 1) Downloads youtube-video into m4a format using youtube-dl.
@@ -11,6 +11,6 @@ Works under linux. Reads Google AudioSet csv file in series, for each video does
 4) Plays each file to the system and re-records it without substantial signal delay. 
 
 
-#acesim.py
+# acesim.py
 
 Plays and recordsat the sime time a SINGLE wav file. Plots the resullting wav files (time-amplitude). Works everywhere.
